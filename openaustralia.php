@@ -69,7 +69,7 @@ function twfy_settings(){
 	
 	?>
 	<div class="wrap">
-		<h2><?php _e('OpenAustralia.org Settings'); ?></h2>
+		<h2><?php _e('OpenAustralia Settings'); ?></h2>
 		<form name="twfy_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">  
 			<input type="hidden" name="twfy_hidden" value="Y">  
 			<h3><?php _e('Choose your MP'); ?></h3>
@@ -180,15 +180,15 @@ function twfy_recent_activity_widget_contents(){
 
 // Dashboard widgets init function 
 function twfy_add_dashboard_widgets(){
-	wp_add_dashboard_widget('twfy-recent-activity-widget', 'MPs Recent Activity', 'twfy_recent_activity_dbwidget');
+	wp_add_dashboard_widget('twfy-recent-activity-widget', 'My MPs Recent Activity', 'twfy_recent_activity_dbwidget');
 }
 
 // Initialising function
 function twfy_init(){
-	register_sidebar_widget(__('MPs Recent Activity'), 'twfy_recent_activity_widget');
+	register_sidebar_widget(__('My MPs Recent Activity'), 'twfy_recent_activity_widget');
     $twfy_default_options = array(
         'person_id'=>'10552',
-        'title'=>'MPs recent activity',
+        'title'=>'My MPs recent activity',
         'desc'=>1,
         'date'=>1,
         'limit'=>5,
