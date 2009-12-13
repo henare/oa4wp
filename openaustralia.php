@@ -156,9 +156,9 @@ function twfy_recent_activity_widget_contents(){
         foreach ($xml->rows->match as $match){
             if ($i>=$twfy_options['limit']) { break; } // don't list more than 5 meetings
             $date = strtotime($match->hdate);
-            echo '<li>';
+            echo '<li><b>';
             if ($twfy_options['date']==1){ echo date('j M', $date).': '; }
-            echo '<a href="http://www.openaustralia.org'.$match->listurl.'">'.$match->parent->body.'</a>';
+            echo '<a href="http://www.openaustralia.org'.$match->listurl.'">'.$match->parent->body.'</a></b>';
             if ($twfy_options['desc']==1){ echo '<br/>'.$match->body; }
             echo '</li>'."\n";
             $i++; //increment the counter
