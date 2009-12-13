@@ -35,12 +35,14 @@ function twfy_settings(){
 		// Log the ID number of the MP
 		$twfy_person_id = trim(htmlentities($_POST['twfy_person_id']));
 		$twfy_title = trim($_POST['twfy_title']);
+                $twfy_name = trim(htmlentities($_POST['twfy_name']));
 		$twfy_desc = trim(htmlentities($_POST['twfy_desc']));
 		$twfy_date = trim(htmlentities($_POST['twfy_date']));
 		$twfy_limit = trim(htmlentities($_POST['twfy_limit']));
 		$twfy_link = trim(htmlentities($_POST['twfy_link']));
         $twfy_options = array(
             'person_id' => $twfy_person_id,
+            'name' => $twfy_name,
             'title' => $twfy_title,
             'desc' => $twfy_desc,
             'date' => $twfy_date,
@@ -92,6 +94,11 @@ function twfy_settings(){
                 <p>
                     <label for="twfy_title">Widget title: </label>
                     <input type="text" id="twfy_title" name="twfy_title" value="<?php echo stripslashes($twfy_options['title']);?>" />
+                </p>
+                <p>
+                    Show MP name?<br/>
+                    <label for="twfy_name_yes"><input type="radio" id="twfy_name_yes" name="twfy_name" value="1" <?php if ($twfy_options['name']==1){echo 'checked="checked" ';} ?>/> Yes</label><br/>
+                    <label for="twfy_name_no"><input type="radio" id="twfy_name_no" name="twfy_name" value="0" <?php if ($twfy_options['name']==0){echo 'checked="checked" ';} ?>/> No</label>
                 </p>
                 <p>
                     Show description?<br/>
@@ -151,7 +158,15 @@ function twfy_recent_activity_widget_contents(){
     if ($twfy_person_id !== FALSE){ // Not if the ID isn't set.
         $xml = simplexml_load_file("http://www.openaustralia.org/api/getHansard?key=EM8hqpERATyUCL4DvWFZbNjA&output=xml&person=".$twfy_options['person_id']); // Load XML
         
-        echo "<ul>\n";
+        // Get some information about the MP
+        $MPname = (string )$xml->rows->match->speaker->first_name.' '.$xml->rows->match->speaker->last_name;
+        $MPconstituency = (string )$xml->rows->match->speaker->constituency;
+        $MPurl = (string )$xml->rows->match->speaker->url;
+        
+        // Display the MP name and constituency
+        if ($twfy_options['name']==1){ echo '<a href="http://www.openaustralia.org'.$MPurl.'">'.$MPname.', MP - Member for '.$MPconstituency.'</a>'; }
+
+        echo "\n<ul>\n";
         $i = 0; //counter for number of meetings
         foreach ($xml->rows->match as $match){
             if ($i>=$twfy_options['limit']) { break; } // don't list more than 5 meetings
@@ -167,7 +182,6 @@ function twfy_recent_activity_widget_contents(){
         
         if ($twfy_options['link']==1){
             // Link back to the MPs page on TWFY^WOpenAustralia
-            $MPurl = (string )$xml->rows->match->speaker->url;
             echo '<p>More from <a href="http://www.openaustralia.org'.$MPurl.'">OpenAustralia.org</a></p>';
         }
     }
@@ -189,6 +203,7 @@ function twfy_init(){
     $twfy_default_options = array(
         'person_id'=>'10552',
         'title'=>'My MPs recent activity',
+        'name'=>1,
         'desc'=>1,
         'date'=>1,
         'limit'=>5,
