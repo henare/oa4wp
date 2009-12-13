@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: OpenAustralia for Wordpress
+Plugin Name: OpenAustralia.org for Wordpress
 Plugin URI: http://github.com/henare/oa4wp/
-Description: Provides tools for bloggers based on OpenAustralia.org
-Author: Philip John, Henare Degan
-Version: 0.2
+Description: Displays your MP's most recent speeches from OpenAustralia.org on your blog. Adapted from the TheyWorkForYou plugin by Philip John: http://philipjohn.co.uk/category/plugins/theyworkforyou/
+Author: Henare Degan
+Version: 0.1
 Author URI: http://www.henaredegan.com/
 
 Future features list;
@@ -53,7 +53,7 @@ function twfy_settings(){
 	}
 	
 	// Load the councils XML for choosing the right authority
-	$xml = simplexml_load_file('http://theyworkforyou.com/api/getMPs?key=AMznwDBcpK3gCLwTTMC9PYHJ&output=xml');
+	$xml = simplexml_load_file('http://www.openaustralia.org/api/getRepresentatives?key=EM8hqpERATyUCL4DvWFZbNjA&output=xml');
 	
 	// Retrieve the currently selected council, if there is one.
 	$twfy_options = get_option('twfy_recent_activity_widget');
@@ -69,7 +69,7 @@ function twfy_settings(){
 	
 	?>
 	<div class="wrap">
-		<h2><?php _e('TheyWorkForYou Settings'); ?></h2>
+		<h2><?php _e('OpenAustralia.org Settings'); ?></h2>
 		<form name="twfy_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">  
 			<input type="hidden" name="twfy_hidden" value="Y">  
 			<h3><?php _e('Choose your MP'); ?></h3>
@@ -108,7 +108,7 @@ function twfy_settings(){
                     <input type="text" id="twfy_limit" name="twfy_limit" value="<?php echo $twfy_options['limit'];?>" />
                 </p>
                 <p>
-                    Show link to MP on TheyWorkForYou.com?<br/>
+                    Show link to MP on OpenAustralia.org?<br/>
                     <label for="twfy_link_yes"><input type="radio" id="twfy_link_yes" name="twfy_link" value="1" <?php if ($twfy_options['link']==1){echo 'checked="checked" ';} ?>/> Yes</label><br/>
                     <label for="twfy_link_no"><input type="radio" id="twfy_link_no" name="twfy_link" value="0" <?php if ($twfy_options['link']==0){echo 'checked="checked" ';} ?>/> No</label>
                 </p>
@@ -123,7 +123,7 @@ function twfy_settings(){
 
 // Add the settings page
 function twfy_actions(){
-	add_options_page('TheyWorkForYou Settings', 'TheyWorkForYou', 5, 'TheyWorkForYou', 'twfy_settings');
+	add_options_page('OpenAustralia Settings', 'OpenAustralia', 5, 'OpenAustralia', 'twfy_settings');
 }
 
 
@@ -149,7 +149,7 @@ function twfy_recent_activity_widget_contents(){
 	$twfy_options = get_option('twfy_recent_activity_widget'); // The council we're displaying
     
     if ($twfy_person_id !== FALSE){ // Not if the ID isn't set.
-        $xml = simplexml_load_file("http://www.theyworkforyou.com/api/getHansard?key=AMznwDBcpK3gCLwTTMC9PYHJ&output=xml&person=".$twfy_options['person_id']); // Load XML
+        $xml = simplexml_load_file("http://www.openaustralia.org/api/getHansard?key=EM8hqpERATyUCL4DvWFZbNjA&output=xml&person=".$twfy_options['person_id']); // Load XML
         
         echo "<ul>\n";
         $i = 0; //counter for number of meetings
@@ -158,7 +158,7 @@ function twfy_recent_activity_widget_contents(){
             $date = strtotime($match->hdate);
             echo '<li>';
             if ($twfy_options['date']==1){ echo date('j M', $date).': '; }
-            echo '<a href="http://www.theyworkforyou.com'.$match->listurl.'">'.$match->parent->body.'</a>';
+            echo '<a href="http://www.openaustralia.org'.$match->listurl.'">'.$match->parent->body.'</a>';
             if ($twfy_options['desc']==1){ echo '<br/>'.$match->body; }
             echo '</li>'."\n";
             $i++; //increment the counter
@@ -166,9 +166,9 @@ function twfy_recent_activity_widget_contents(){
         echo "</ul>\n";
         
         if ($twfy_options['link']==1){
-            // Link back to the MPs page on TWFY
+            // Link back to the MPs page on TWFY^WOpenAustralia
             $MPurl = (string )$xml->rows->match->speaker->url;
-            echo '<p>More from <a href="http://www.theyworkforyou.com'.$MPurl.'">TheyWorkForYou.com</a></p>';
+            echo '<p>More from <a href="http://www.openaustralia.org'.$MPurl.'">OpenAustralia.org</a></p>';
         }
     }
     else {
@@ -187,7 +187,7 @@ function twfy_add_dashboard_widgets(){
 function twfy_init(){
 	register_sidebar_widget(__('MPs Recent Activity'), 'twfy_recent_activity_widget');
     $twfy_default_options = array(
-        'person_id'=>'10068',
+        'person_id'=>'10552',
         'title'=>'MPs recent activity',
         'desc'=>1,
         'date'=>1,
