@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: TheyWorkForYou for Wordpress
-Plugin URI: http://philipjohn.co.uk/category/plugins/theyworkforyou/
-Description: Provides tools for bloggers based on mySociety's TheyWorkForYou.com
-Author: Philip John
-Version: 0.1b
-Author URI: http://philipjohn.co.uk
+Plugin Name: OpenAustralia for Wordpress
+Plugin URI: http://github.com/henare/oa4wp/
+Description: Provides tools for bloggers based on OpenAustralia.org
+Author: Philip John, Henare Degan
+Version: 0.2
+Author URI: http://www.henaredegan.com/
 
 Future features list;
  * Custom date format
