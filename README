@@ -3,6 +3,6 @@ OpenAustralia.org for Wordpress
 
 This is a Wordpress plugin that displays your MP's most recent speeches from OpenAustralia.org on your blog. It is adapted from the TheyWorkForYou plugin by Philip John: http://philipjohn.co.uk/category/plugins/theyworkforyou/
 
-To install it on your blog the easiest way is to zip the php file and go to Plugins>Add New>Upload. For other ways of installing plugins see http://urbangiraffe.com/articles/how-to-install-a-wordpress-plugin/
+The easiest way to install it on your blog is to download this source as a zip file (use the Github Download source button above) and go to Plugins>Add New>Upload on your Wordpress blog. For other ways of installing plugins see http://urbangiraffe.com/articles/how-to-install-a-wordpress-plugin/
 
 To report bugs or request features, email the OpenAustralia Community list: http://groups.google.com/group/openaustralia-dev/
